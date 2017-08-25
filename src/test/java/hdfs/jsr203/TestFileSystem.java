@@ -77,7 +77,7 @@ public class TestFileSystem extends TestHadoop {
     FileUtil.fullyDelete(baseDir);
     Configuration conf = new Configuration();
     conf.set(MiniDFSCluster.HDFS_MINIDFS_BASEDIR, baseDir.getAbsolutePath());
-    MiniDFSCluster.Builder builder = new MiniDFSCluster.Builder(conf);
+    MiniDFSCluster.Builder builder = new MiniDFSCluster.Builder(conf).nameNodePort(8020);
     MiniDFSCluster hdfsCluster = builder.clusterId(testName).build();
     hdfsCluster.waitActive();
     return hdfsCluster;
@@ -412,6 +412,15 @@ public class TestFileSystem extends TestHadoop {
   public void testNullHost() throws URISyntaxException, IOException {
     URI uri = URI.create("hdfs:///tmp/testNullHost");
     Paths.get(uri);
+  }
+
+  @Test()
+  public void test() throws URISyntaxException, IOException {
+    System.out.println(clusterUri);
+    URI uri = URI.create("hdfs:///tmp/testNullHost");
+    Path p = Paths.get(uri);
+    System.out.println(p);
+    Files.exists(p);
   }
 
 }
