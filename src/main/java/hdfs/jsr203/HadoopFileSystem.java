@@ -80,7 +80,6 @@ public class HadoopFileSystem extends FileSystem {
   private static final String REGEX_SYNTAX = "regex";
 
 	private org.apache.hadoop.fs.FileSystem fs;
-	private int port;
 	private FileSystemProvider provider;
 	private boolean readOnly;
 	private volatile boolean isOpen = true;
@@ -116,8 +115,6 @@ public class HadoopFileSystem extends FileSystem {
         this.fs = org.apache.hadoop.fs.FileSystem.get(conf);
         
         this.userPrincipalLookupService = new HadoopUserPrincipalLookupService(this);
-
-        this.port = port;
 	}
 	
 	private final void beginWrite() {
@@ -249,7 +246,7 @@ public class HadoopFileSystem extends FileSystem {
 
 	public int getPort()
 	{
-		return port;
+		return fs.getUri().getPort();
 	}
 
 	public org.apache.hadoop.fs.FileSystem getHDFS(){
